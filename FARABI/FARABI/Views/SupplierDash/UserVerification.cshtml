@@ -1,0 +1,82 @@
+﻿@model FARABI.Models.Verification
+
+@{
+    ViewBag.Title = "UserVerification";
+}
+<head>
+    <style type="text/css">
+        .modal-dialog {
+            position: absolute;
+            top: 50px;
+            right: 100px;
+            bottom: 0;
+            left: 0;
+            z-index: 10040;
+            overflow: auto;
+            overflow-y: auto;
+            animation-name: fadeIn;
+            animation-duration: 0.4s;
+        }
+    </style>
+    <title></title>
+</head>
+<h2>UserVerification</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Verification</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.OTP, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.OTP, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.OTP, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+    //modal popup
+    <div id="MyPopup" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        &times;
+                    </button>
+                    <h4 class="modal-title">
+                        <span id="title" style="color:blue; font-style:bold; font-variant-caps:titling-caps;"></span>
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <span id="lblError"></span>
+                </div>
+                <div class="modal-footer">
+                    <input type="button" id="btnClosePopup" value="Close" class="btn btn-danger" data-dismiss="modal" />
+                </div>
+            </div>
+        </div>
+    </div>
+    if (ViewBag.Message != null)
+    {
+        <script type="text/javascript">
+            window.onload = function () {
+                $("#title").html('@Html.Raw(ViewBag.title)');
+                $("#lblError").html('@Html.Raw(ViewBag.Message)').css('color','Green');
+                $("#MyPopup").modal("show");
+            };
+        </script>
+    }
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

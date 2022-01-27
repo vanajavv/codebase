@@ -1,0 +1,68 @@
+﻿@using System.Data
+@using System.Data.SqlClient
+@model System.Data.DataTable
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+
+
+<head>
+
+    <meta name="viewport" content="width=device-width" />
+
+    <title>Home</title>
+
+</head>
+
+
+<body>
+    <form method="post" name="Display">
+        <h2>Home</h2>
+        
+        <br />
+        @{
+            if (Model.Rows.Count > 0)
+            {
+                <table border="1">
+                    <thead>
+                        <tr>
+                            <td>
+                                Student ID
+                            </td>
+                            <td>
+                                Name
+                            </td>
+                            <td>
+                                Age
+                            </td>
+                            <td> Gender </td>
+                        </tr>
+                    </thead>
+                    @foreach (DataRow dr in Model.Rows)
+                    {
+                        <tr>
+                            <td> @dr["Log_Id"].ToString() </td>
+                            <td> @dr["FirstName"].ToString() </td>
+                            <td> @dr["LastName"].ToString() </td>
+                            <td> @dr["Email"].ToString() </td>
+                            <td> @Html.ActionLink("Edit ", "Edit", new { EmpID = dr["Log_Id"].ToString() }) </td>
+                            <td> @Html.ActionLink("| Delete", "Delete", new { EmpID = dr["Log_Id"].ToString() }) </td>
+                        </tr>
+                    }
+                </table>
+                <br />
+            }
+            else
+            {
+                <span> No records found!!</span>
+            }
+        }
+
+    </form>
+
+</body>
+
+
+</html>

@@ -1,0 +1,121 @@
+﻿
+<html>
+<head>
+    <title></title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#ddlStatus").change(function () {
+                if ($("#ddlStatus").val() == 3) {
+                    $("#txtSb").show()
+                    $("#lblFeed").show()
+                } else {
+                    $("#txtSb").hide()
+                    $("#lblFeed").hide()
+                }
+            })
+        });
+    </script>
+    
+</head>
+
+<body>
+    <form id="frmDetail" method="post" action="@Url.Action("UpdateRecord")">
+        <center>
+            @*   @Html.DropDownList("mySkills", ViewData["DBMySkills"] as SelectList, "Please Select an Employee")*@
+
+
+            <table class="table">
+                <tr>
+                    <td>
+                        First Name
+                    </td>
+                    <td>
+                        <input name="txtName" value="@Model.Rows[0]["FirstName"]" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Last Name
+                    </td>
+                    <td>
+                        <input name="txtAge" value="@Model.Rows[0]["LastName"]" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Email
+                    </td>
+                    <td>
+                        <input name="txtEmail" value="@Model.Rows[0]["Email"]" />
+                        <input type="hidden" name="hdnID" value="@Model.Rows[0]["Log_Id"]" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Status
+                    </td>
+                    <td>
+                        @Html.DropDownList("ddlStatus", new List<SelectListItem>
+                            {
+                            new SelectListItem{ Text="--Select--", Value = "0" },
+                               new SelectListItem{ Text="Approved", Value = "1" },
+                               new SelectListItem{ Text="Rejected", Value = "2" },
+                               new SelectListItem{ Text="SendBack", Value = "3" },
+
+                            })
+
+                    </td>
+                </tr>
+                <tr>
+                    <td id="lblFeed" style="display:none;
+">
+                        Feed Back
+                    </td>
+                    <td>
+                        <input name="txtSendBack" id="txtSb" style="display:none;" />
+                    </td>
+                </tr>
+            </table>
+        </center>
+
+
+        <input type="submit" value="Submit" name="action" />
+        <input type="submit" value="Cancel" name="action" />
+
+    </form>
+    @*<div id="MyPopup" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        &times;
+                    </button>
+                    <h4 class="modal-title">
+                        <span id="title" style="color:blue; font-style:bold; font-variant-caps:titling-caps;"></span>
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <span id="lblError"></span>
+                </div>
+                <div class="modal-footer">
+                    <input type="button" id="btnClosePopup" value="Close" class="btn btn-danger" data-dismiss="modal" />
+                </div>
+            </div>
+        </div>
+    </div>*@
+    @*if (ViewBag.Message != null)
+    {
+    <script type="text/javascript">
+            window.onload = function () {
+                $("#title").html('@Html.Raw(ViewBag.title)');
+                $("#lblError").html('@Html.Raw(ViewBag.Message)').css('color','Green');
+                $("#MyPopup").modal("show");
+            };
+    </script>
+    }*@
+</body>
+
+
+</html>
